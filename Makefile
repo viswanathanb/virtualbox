@@ -36,7 +36,7 @@ attach:
 node: vm config hdd attach
 
 start:
-	VBoxManage startvm $(VM_NAME)
+	VBoxManage startvm $(VM_NAME) --type=headless
 
 stop:
 	VBoxManage controlvm $(VM_NAME) poweroff
