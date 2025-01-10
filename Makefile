@@ -15,7 +15,7 @@ vm:
 config:
 	VBoxManage modifyvm $(VM_NAME) --memory $(MEM_SIZE) --cpus $(NUM_CPUS)
 	VBoxManage modifyvm $(VM_NAME) --nic1 bridged --bridgeadapter1 $(BRIDGE_ADAPTER) --nictype1 82540EM
-	VBoxManage modifyvm $(VM_NAME) --boot1 dvd --boot2 disk --boot3 none --boot4 none
+	VBoxManage modifyvm $(VM_NAME) --boot1 disk --boot2 dvd --boot3 none --boot4 none
 	VBoxManage modifyvm $(VM_NAME) --graphicscontroller vmsvga
 	VBoxManage modifyvm $(VM_NAME) --audio-driver none
 	vboxmanage modifyvm $(VM_NAME) --macaddress1 0800271b220${VM_ID}
@@ -36,13 +36,15 @@ attach:
 node: vm config hdd attach
 
 start:
-	VBoxManage startvm $(VM_NAME) --type=headless
+	VBoxManage startvm $(VM_NAME) # --type=headless
 
 stop:
 	VBoxManage controlvm $(VM_NAME) poweroff
+	sleep 5
 
 delete:
 	VBoxManage unregistervm $(VM_NAME) --delete
+	sleep 5
 
 clean:
 	rm -rf $(VM_DIR)
